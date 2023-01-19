@@ -2,11 +2,11 @@
 name = "willowtree"
 version = "0.1.0"
 edition = "2021"
-license-file = "LICENSE"
+license = "MIT"
 description = "Lazily evaluated trees"
-homepage = "https://github.com/lewis-carson"
-documentation = "https://github.com/lewis-carson"
-repository = "https://github.com/lewis-carson"
+homepage = "https://github.com/lewis-carson/willowtree"
+documentation = "https://github.com/lewis-carson/willowtree"
+repository = "https://github.com/lewis-carson/willowtree"
 readme = "README.md"
 keywords = ["data-structure", "collection", "tree", "lazy"]
 

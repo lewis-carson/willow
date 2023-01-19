@@ -1,4 +1,4 @@
-use willow::Tree;
+use willowtree::Tree;
 
 struct Node {}
 
@@ -8,7 +8,7 @@ impl Node {
     }
 }
 
-impl willow::Node for Node {
+impl willowtree::Node for Node {
     fn children(&self) -> Vec<Self>
     where
         Self: Sized,
@@ -17,7 +17,7 @@ impl willow::Node for Node {
     }
 }
 
-fn walk(tree: &mut Tree<Node>, id: willow::Id, depth: usize) {
+fn walk(tree: &mut Tree<Node>, id: willowtree::Id, depth: usize) {
     if depth == 1000 {
         return;
     }
