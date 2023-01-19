@@ -30,6 +30,10 @@ where
     pub fn children(&mut self, id: NodeId) -> Vec<NodeId> {
         let node = self.arena.get(id).unwrap();
 
+        if id.children(&self.arena).count() > 0 {
+            return id.children(&self.arena).collect();
+        }
+
         for child in node.get().children() {
             let c = self.arena.new_node(child);
             id.append(c, &mut self.arena);
