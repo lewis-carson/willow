@@ -9,6 +9,8 @@ pub trait Node {
     fn children(&self) -> Vec<Self>
     where
         Self: Sized;
+
+    fn leaf(&self) -> bool;
 }
 
 impl<T> Tree<T>
@@ -30,6 +32,10 @@ where
     pub fn children(&mut self, id: NodeId) -> Vec<NodeId> {
         let node = self.arena.get(id).unwrap();
 
+        if node.get().leaf() {
+            return vec![];
+        }
+
         if id.children(&self.arena).count() > 0 {
             return id.children(&self.arena).collect();
         }
@@ -40,6 +46,10 @@ where
         }
 
         id.children(&self.arena).collect()
+    }
+
+    pub fn get(&self, id: NodeId) -> Option<&T> {
+        self.arena.get(id).map(|node| node.get())
     }
 }
 
