@@ -9,7 +9,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "497f036ac2fae75c34224648a77802e5dd4e9cfb56f4713ab6b12b7160a0523b"
 
 [[package]]
-name = "willow"
+name = "willowtree"
 version = "0.1.0"
 dependencies = [
  "indextree",
