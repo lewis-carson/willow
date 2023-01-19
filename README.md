@@ -1,4 +1,4 @@
-# Lazily evaluated tree
+# Lazily evaluated trees
 
 Sometimes, you need to traverse a tree so large that you can't afford to load it all into memory. 
 

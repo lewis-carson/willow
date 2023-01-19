@@ -2,8 +2,13 @@
 name = "willow"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license-file = "LICENSE"
+description = "Lazily evaluated trees"
+homepage = "https://github.com/lewis-carson"
+documentation = "https://github.com/lewis-carson"
+repository = "https://github.com/lewis-carson"
+readme = "README.md"
+keywords = ["data-structure", "collection", "tree", "lazy"]
 
 [dependencies]
 indextree = "4.5.0"
