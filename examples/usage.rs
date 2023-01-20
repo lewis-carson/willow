@@ -14,10 +14,7 @@ impl Node {
 }
 
 impl willowtree::Node for Node {
-    fn children(&self) -> Vec<Self>
-    where
-        Self: Sized,
-    {
+    fn children(&self) -> Vec<Self> {
         // check if path is file using fs
         // if so, return empty vec
 
@@ -26,9 +23,7 @@ impl willowtree::Node for Node {
         match children {
             Ok(children) => children
                 .map(|file| {
-                    let file = file.unwrap();
-                    let path = file.path();
-                    let path = path.to_str().unwrap().to_string();
+                    let path = file.unwrap().path().to_str().unwrap().to_string();
 
                     Node::new(path)
                 })
@@ -47,17 +42,22 @@ impl willowtree::Node for Node {
     }
 }
 
-fn walk(tree: &mut Tree<Node>, id: willowtree::Id) {
+fn walk(tree: &mut Tree<Node>, id: willowtree::Id, depth: usize) {
+    if depth == 5 {
+        return;
+    }
+
     for child in &mut tree.children(id) {
-        println!("{:?}", tree.get(*child).unwrap().path);
-        walk(tree, *child);
+        walk(tree, *child, depth + 1);
     }
 }
+
+
 
 fn main() {
     let mut tree = Tree::<Node>::new(Node::new("/".to_string()));
 
     let root = tree.root();
 
-    walk(&mut tree, root);
+    walk(&mut tree, root, 0);
 }

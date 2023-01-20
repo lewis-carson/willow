@@ -1,5 +1,6 @@
 use indextree::{Arena, NodeId};
 
+#[derive(Debug)]
 pub struct Tree<T> {
     arena: Arena<T>,
     root: NodeId,
@@ -29,6 +30,14 @@ where
         self.root
     }
 
+    pub fn is_rendered(&self, id: NodeId) -> bool {
+        id.children(&self.arena).count() > 0
+    }
+
+    pub fn rendered_children(&self, id: NodeId) -> Vec<NodeId> {
+        id.children(&self.arena).collect()
+    }
+
     pub fn children(&mut self, id: NodeId) -> Vec<NodeId> {
         let node = self.arena.get(id).unwrap();
 
@@ -36,8 +45,8 @@ where
             return vec![];
         }
 
-        if id.children(&self.arena).count() > 0 {
-            return id.children(&self.arena).collect();
+        if self.is_rendered(id) {
+            return self.rendered_children(id);
         }
 
         for child in node.get().children() {
