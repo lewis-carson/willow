@@ -2,7 +2,7 @@ use std::fs;
 
 use willowtree::Tree;
 
-#[derive(Debug)]
+#[derive(Debug, Hash, Eq, PartialEq)]
 struct Node {
     path: String,
 }
@@ -51,8 +51,6 @@ fn walk(tree: &mut Tree<Node>, id: willowtree::Id, depth: usize) {
         walk(tree, *child, depth + 1);
     }
 }
-
-
 
 fn main() {
     let mut tree = Tree::<Node>::new(Node::new("/".to_string()));

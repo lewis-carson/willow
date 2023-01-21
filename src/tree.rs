@@ -4,9 +4,10 @@ use indextree::{Arena, NodeId};
 pub struct Tree<T> {
     arena: Arena<T>,
     root: NodeId,
+    hash_table: std::collections::HashMap<T, NodeId>,
 }
 
-pub trait Node {
+pub trait Node: std::hash::Hash + std::cmp::Eq + std::fmt::Debug {
     fn children(&self) -> Vec<Self>
     where
         Self: Sized;
@@ -23,7 +24,11 @@ where
 
         let root = arena.new_node(r);
 
-        Self { arena, root }
+        Self {
+            arena,
+            root,
+            hash_table: std::collections::HashMap::new(),
+        }
     }
 
     pub fn root(&self) -> NodeId {
@@ -38,6 +43,12 @@ where
         id.children(&self.arena).collect()
     }
 
+    fn add_child(&mut self, id: NodeId, child: T) -> NodeId {
+        let c = self.arena.new_node(child);
+        id.append(c, &mut self.arena);
+        c
+    }
+
     pub fn children(&mut self, id: NodeId) -> Vec<NodeId> {
         let node = self.arena.get(id).unwrap();
 
@@ -50,8 +61,15 @@ where
         }
 
         for child in node.get().children() {
-            let c = self.arena.new_node(child);
-            id.append(c, &mut self.arena);
+            // check if child is already in the tree
+            if let Some(c) = self.hash_table.get(&child) {
+                // if so, append the existing node to the parent
+                // instead of creating a new one
+                id.append(*c, &mut self.arena);
+                continue;
+            }
+
+            self.add_child(id, child);
         }
 
         id.children(&self.arena).collect()
